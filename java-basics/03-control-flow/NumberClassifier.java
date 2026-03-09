@@ -33,9 +33,24 @@ Concepts practiced:
 - integer variables
 */
 
+import java.util.Scanner;
+
 public class NumberClassifier {
 	
 	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
 
+		System.out.print("Introduzca un numero: ");
+		int number = sc.nextInt();
+
+		if (number == 0) {
+			System.out.println("El numero es cero");
+		} else if (number > 0) {
+			System.out.println("El numero es positivo");
+		} else {
+			System.out.println("El numero es negativo");
+		}
+		
+		sc.close();
 	}
 }
