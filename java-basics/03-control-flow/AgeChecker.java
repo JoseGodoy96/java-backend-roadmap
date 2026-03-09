@@ -21,6 +21,24 @@ Enter your age: 20
 You are an adult
 */
 
+import java.util.Scanner;
+
 public class AgeChecker {
 	
+	public static void main(String[] args){
+
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Que edad tienes? ");
+		int age = sc.nextInt();
+
+		if (age >= 18) {
+			System.out.println("Eres mayor de edad");
+		}
+		else {
+			System.out.println("Eres menor de edad");
+		}
+
+		sc.close();
+	} 
 }
