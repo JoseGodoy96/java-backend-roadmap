@@ -36,6 +36,35 @@ Concepts practiced:
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class EvenOddCounter(){
-	
+public class EvenOddCounter {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Cuantos numeros va a introducir? ");
+		int total = sc.nextInt();
+
+		ArrayList<Integer> numbers = new ArrayList<>();
+
+		int i = 0;
+		int even = 0;
+		int odd = 0;
+		while (i < total)
+		{
+			System.out.print("Que numero va a introducir? ");
+			int num = sc.nextInt();
+			numbers.add(num);
+			if (num % 2 == 0) {
+				even++;
+			} else {
+				odd++;
+			}
+			i++;
+		}
+
+		System.out.println("El numero de pares es: " + even);
+		System.out.println("El numero de impares es: " + odd);
+
+		sc.close();
+	}
 }
