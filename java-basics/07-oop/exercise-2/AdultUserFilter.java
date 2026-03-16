@@ -51,3 +51,47 @@ Concepts practiced:
 - filtering data with conditions
 - loops
 */
+
+import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+
+public class AdultUserFilter {
+
+	public static void main(String[] args) {
+
+		Scanner sc = new Scanner(System.in);
+
+		List<User> users = new ArrayList<>();
+
+		System.out.print("Cuantos usuarios va a introducir? ");
+		int total = sc.nextInt();
+
+		while (total > 0) {
+			System.out.print("Cual es su nombre? ");
+			String name = sc.nextLine();
+
+			System.out.print("Cual es su edad? ");
+			int age = sc.nextInt();
+
+			users.add(new User(name, age));
+
+			total--;
+		}
+
+		int	i = 0;
+		int count = 0;
+		while (i < users.size())
+		{
+			if (users.get(i).age >= 18) {
+				users.get(i).hello();
+				count++;
+			}
+			i++;
+		}
+		if (count == 0) {
+			System.out.println("No hay usuarios mayores de edad");
+		}
+		sc.close();
+	}
+}
