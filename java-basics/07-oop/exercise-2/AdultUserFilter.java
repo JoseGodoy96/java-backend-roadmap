@@ -66,6 +66,7 @@ public class AdultUserFilter {
 
 		System.out.print("Cuantos usuarios va a introducir? ");
 		int total = sc.nextInt();
+		sc.nextLine();
 
 		while (total > 0) {
 			System.out.print("Cual es su nombre? ");
