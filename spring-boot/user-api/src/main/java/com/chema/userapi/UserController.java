@@ -23,4 +23,34 @@ public class UserController {
         users.add(user);
         return "User added";
     }
+
+    // DELETE /users/name
+    @DeleteMapping("/{name}")
+    public String deleteUser(@PathVariable String name) {
+
+        int i = 0;
+        while (i < users.size()) {
+            if (users.get(i).name.equalsIgnoreCase(name)) {
+                users.remove(i);
+                return "User deleted";
+            }
+            i++;
+        }
+
+        return "User not found";
+    }
+
+    // PUT /users/name
+    @PutMapping("/{name}")
+    public String updateUser(@PathVariable String name, @RequestBody User updatedUser) {
+
+        for (User user : users) {
+            if (user.name.equalsIgnoreCase(name)) {
+                user.age = updatedUser.age;
+                return "User updated";
+            }
+        }
+
+        return "User not found";
+    }
 }
