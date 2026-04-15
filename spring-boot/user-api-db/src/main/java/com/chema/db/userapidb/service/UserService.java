@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import com.chema.db.userapidb.repository.UserRepository;
 import com.chema.db.userapidb.model.User;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,4 +26,6 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    public Optional<User> getUserById(Long id) { return userRepository.findById(id); }
 }
