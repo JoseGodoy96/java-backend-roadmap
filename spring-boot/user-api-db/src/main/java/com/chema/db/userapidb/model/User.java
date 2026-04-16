@@ -5,7 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-
+import jakarta.validation.constraints.Min;
 
 @Entity
 @Table(name = "users")
@@ -17,6 +17,8 @@ public class User {
 
     @NotBlank
     private String name;
+
+    @Min(0)
     private Integer age;
 
     public void setId(Long id) {
