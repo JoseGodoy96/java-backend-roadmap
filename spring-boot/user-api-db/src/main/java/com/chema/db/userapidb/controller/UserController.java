@@ -43,6 +43,10 @@ public class UserController {
 
     @PostMapping
     public User createUser(@Valid @RequestBody UserDto userDto) {
+        User user = new User();
+        user.setName((userDto.getName()));
+        user.setAge(userDto.getAge());
+
         return userService.createUser(user);
     }
 
