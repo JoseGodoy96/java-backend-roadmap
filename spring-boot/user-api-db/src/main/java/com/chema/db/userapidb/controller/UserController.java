@@ -14,6 +14,8 @@ import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import jakarta.validation.Valid;
 import com.chema.db.userapidb.dto.UserDto;
+import com.chema.db.userapidb.dto.UserResponseDto;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -37,8 +39,17 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public List<UserResponseDto> getAllUsers() {
+        return userService.getAllUsers()
+                .stream()
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setAge(user.getAge());
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
     @PostMapping
