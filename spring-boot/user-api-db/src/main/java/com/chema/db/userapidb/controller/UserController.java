@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import jakarta.validation.Valid;
+import com.chema.db.userapidb.dto.UserDto;
 
 @RestController
 @RequestMapping("/users")
@@ -41,7 +42,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@Valid @RequestBody User user) {
+    public User createUser(@Valid @RequestBody UserDto userDto) {
         return userService.createUser(user);
     }
 
