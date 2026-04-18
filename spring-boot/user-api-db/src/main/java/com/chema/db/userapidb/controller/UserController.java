@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import jakarta.validation.Valid;
 import com.chema.db.userapidb.dto.UserDto;
 import com.chema.db.userapidb.dto.UserResponseDto;
 import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/users")
@@ -29,13 +29,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> user = userService.getUserById(id);
-
-        if (user.isPresent()) {
-            return ResponseEntity.ok(user.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        User user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping
@@ -59,6 +54,22 @@ public class UserController {
         user.setAge(userDto.getAge());
 
         return userService.createUser(user);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDto> updateUser (@PathVariable Long id, @Valid @RequestBody UserDto userDto) {
+        User user = new User();
+        user.setName(userDto.getName());
+        user.setAge(userDto.getAge());
+
+        User updatedUser = userService.updateUser(id, user);
+
+        UserResponseDto response = new UserResponseDto();
+        response.setId(updatedUser.getId());
+        response.setName(updatedUser.getName());
+        response.setAge(updatedUser.getAge());
+
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")

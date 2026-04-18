@@ -5,6 +5,7 @@ import com.chema.db.userapidb.repository.UserRepository;
 import com.chema.db.userapidb.model.User;
 import java.util.List;
 import java.util.Optional;
+import com.chema.db.userapidb.exception.UserNotFoundException;
 
 @Service
 public class UserService {
@@ -19,26 +20,28 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+    }
+
     public User createUser(User user) {
         return userRepository.save(user);
     }
 
     public User updateUser(Long id, User user) {
-        Optional<User> existingUser = userRepository.findById(id);
+        User u = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
 
-        if (existingUser.isPresent()) {
-            User u = existingUser.get();
-            u.setName(user.getName());
-            u.setAge(user.getAge());
-            return userRepository.save(u);
-        } else {
-            throw new RuntimeException("User not found");
-        }
+        u.setName(user.getName());
+        u.setAge(user.getAge());
+        return userRepository.save(u);
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
-    }
+        User u = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
 
-    public Optional<User> getUserById(Long id) { return userRepository.findById(id); }
+        userRepository.delete(u);
+    }
 }
