@@ -4,8 +4,9 @@ import org.springframework.stereotype.Service;
 import com.chema.db.userapidb.repository.UserRepository;
 import com.chema.db.userapidb.model.User;
 import java.util.List;
-import java.util.Optional;
 import com.chema.db.userapidb.exception.UserNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class UserService {
@@ -43,5 +44,13 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(id));
 
         userRepository.delete(u);
+    }
+
+    public Page<User> getUsers(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    public List<User> searchUsersByName(String name) {
+        return userRepository.findByNameContainingIgnoreCase(name);
     }
 }

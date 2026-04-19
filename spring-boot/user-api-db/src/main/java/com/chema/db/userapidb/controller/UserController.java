@@ -16,6 +16,9 @@ import com.chema.db.userapidb.dto.UserDto;
 import com.chema.db.userapidb.dto.UserResponseDto;
 import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/users")
@@ -75,5 +78,31 @@ public class UserController {
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+    }
+
+    @GetMapping("/paged")
+    public Page<UserResponseDto> getUsersPaged(Pageable pageable) {
+        return userService.getUsers(pageable)
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setAge(user.getAge());
+                    return dto;
+                });
+    }
+
+    @GetMapping("/search")
+    public List<UserResponseDto> searchUsers(@RequestParam String name) {
+        return userService.searchUsersByName(name)
+                .stream()
+                .map(user -> {
+                    UserResponseDto dto = new UserResponseDto();
+                    dto.setId(user.getId());
+                    dto.setName(user.getName());
+                    dto.setAge(user.getAge());
+                    return dto;
+                })
+                .toList();
     }
 }
