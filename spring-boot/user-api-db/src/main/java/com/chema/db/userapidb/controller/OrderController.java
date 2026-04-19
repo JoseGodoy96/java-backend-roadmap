@@ -1,5 +1,6 @@
 package com.chema.db.userapidb.controller;
 
+import com.chema.db.userapidb.dto.OrderResponseDto;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.chema.db.userapidb.service.OrderService;
@@ -22,8 +23,16 @@ public class OrderController {
     }
 
     @GetMapping("/{userId}/orders")
-    public List<Order> getOrdersByUser(@PathVariable Long userId) {
-        return orderService.getOrdersByUserId(userId);
+    public List<OrderResponseDto> getOrdersByUser(@PathVariable Long userId) {
+        return orderService.getOrdersByUserId(userId)
+                .stream()
+                .map(order -> {
+                    OrderResponseDto dto = new OrderResponseDto();
+                    dto.setId(order.getId());
+                    dto.setDescription(order.getDescription());
+                    return dto;
+                })
+                .toList();
     }
 
     @PostMapping("/{userId}/orders")
